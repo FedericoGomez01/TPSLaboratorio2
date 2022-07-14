@@ -40,6 +40,10 @@ namespace Vista
             this.cancellation = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellation.Token;
             Task.Run(() => AbrirPinruteria(cancellation), cancellationToken);
+            //this.pintureria.Clientes = this.DB.ObtenerListaClientes();
+            //this.ActualizarInformacionCliente();
+            this.pintureria.Clientes = this.DB.ObtenerListaClientes();
+            this.ActualizarInformacionCliente();
         }
 
         private void ActualizarHora()
@@ -84,6 +88,7 @@ namespace Vista
         {
             try
             {
+                this.rtbInformacionClientes.Text = "";
                 if (this.pintureria.Clientes.Count != 0)
                 {
                     foreach (Cliente c in this.pintureria.Clientes)
@@ -192,17 +197,6 @@ namespace Vista
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                this.pintureria.Clientes = this.DB.ObtenerListaAlumnos();
-                this.ActualizarInformacionCliente();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Algo salió mal", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            /*
             OpenFileDialog archivo = new OpenFileDialog();
             archivo.Filter = " |*.json";
             if (archivo.ShowDialog() == DialogResult.OK)
@@ -218,7 +212,6 @@ namespace Vista
                     MessageBox.Show("Algo salió mal", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            */
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,7 +219,6 @@ namespace Vista
 
             try
             {
-                //agregar la carga de datos a la DB
 
                 Serializadora.Serializar_JSON("PintureriaClientes.json", pintureria.Clientes);
                 

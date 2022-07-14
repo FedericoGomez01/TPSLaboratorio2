@@ -18,8 +18,6 @@ namespace Entidades
         private delegate void AbrirPintureria();
         private delegate void Cerrar();
 
-        private event AbrirPintureria PintureriaAbierta;
-        private event Cerrar PintureriaCerrada;
 
         public Pintureria()
             : this(0)
@@ -72,9 +70,6 @@ namespace Entidades
             return pintureria;
         }
 
-
-
-
         public static float ActualizarFondos(string c, float numero)
         {
             switch (c)
@@ -87,8 +82,6 @@ namespace Entidades
                     return Pintureria<T>.fondoActual;
             }
         }
-
-
 
     }
 }

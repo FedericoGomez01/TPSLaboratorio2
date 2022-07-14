@@ -72,9 +72,16 @@ namespace Vista
         {
             try
             {
+                btnBuscarEliminar_Click(sender, e);
                 if(eliminarCliente is not null)
                 {
-                    this.eliminarCliente.Invoke(this.cliente);
+                    DialogResult result = MessageBox.Show("Esta seguro que desea eliminar este cliente?\n" +
+                        $"{this.cliente.Nombre}, {this.cliente.Apellido}, con Dni: {this.cliente.Dni}", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (result == DialogResult.Yes)
+                    {
+                        this.eliminarCliente.Invoke(this.cliente);
+
+                    }
                 }
                 this.Close();
             }
@@ -101,18 +108,21 @@ namespace Vista
                 btnBuscarEliminar_Click(sender, e);
                 if (this.cliente is not null && this.eliminarCliente is not null)
                 {
-                    
-                    DialogResult result = MessageBox.Show("Esta seguro que desea modificar este cliente?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if(result == DialogResult.Yes)
-                    { 
-                        eliminarCliente.Invoke(cliente);
-
-                        this.formAgregar = new FormAgregar(formPrincipal.AgregarCliente);
-                        formAgregar.ModificarCliente(this.cliente);
-                        formAgregar.ShowDialog();
-                        this.Close();
+                    this.formAgregar = new FormAgregar(formPrincipal.AgregarCliente);
+                    this.formAgregar.Text = "Modificar Cliente";
+                    this.formAgregar.ModificarCliente(this.cliente);
+                    this.formAgregar.ShowDialog();
+                    Cliente clienteAuxiliar = this.formAgregar.GetCliente;
+                    if(clienteAuxiliar is not null)
+                    {
+                        
+                        this.formPrincipal.pintureria -= this.cliente;
+                        this.formPrincipal.pintureria += clienteAuxiliar;
                     }
+                    this.formPrincipal.ActualizarInformacionCliente();
+                    this.Close();
                 }
+                
             }
             catch (FormatException)
             {

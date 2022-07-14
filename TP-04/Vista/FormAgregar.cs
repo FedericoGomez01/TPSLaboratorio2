@@ -33,6 +33,11 @@ namespace Vista
 
         }
 
+        public Cliente GetCliente
+        {
+            get { return this.cliente; }
+        }
+
 
 
         private void NuevoClienteProveedor_Load(object sender, EventArgs e)
@@ -78,8 +83,6 @@ namespace Vista
             }
         }
 
-
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -100,7 +103,6 @@ namespace Vista
                     this.btnModificar.Visible = true;
                     this.btnModificar.Location = new Point(53, 307);
                 }
-
             }
             catch (Exception)
             {
@@ -110,7 +112,20 @@ namespace Vista
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            btnAgregar_Click(sender, e);
+            try
+            {
+                DialogResult result = MessageBox.Show("Esta seguro que desea modificar este cliente?", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    this.cliente = new Cliente(int.Parse(this.txtDni.Text), this.txtNombre.Text, this.txtApellido.Text, this.txtEmail.Text, (TipoFactura)this.cmbTipo.SelectedIndex);
+                    this.DB.ModificarCliente(this.cliente);
+                    this.Close();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Algo salió mal", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

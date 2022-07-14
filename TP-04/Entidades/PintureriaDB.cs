@@ -28,7 +28,7 @@ namespace Entidades
         }
 
 
-        public List<Cliente> ObtenerListaAlumnos()
+        public List<Cliente> ObtenerListaClientes()
         {
             List<Cliente> lista = new List<Cliente>();
 
@@ -157,7 +157,7 @@ namespace Entidades
             return rta;
         }
 
-        public bool ModificarAlumno(Cliente param)
+        public bool ModificarCliente(Cliente param)
         {
             bool rta = true;
 
